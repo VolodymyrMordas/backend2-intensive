@@ -1,19 +1,14 @@
 // Core
 import express from 'express';
 
-// Instruments
-import { get, post } from './route';
-import { getByHash } from './hash/route';
-import { limiter, validator } from '../../utils';
+import { login, logout}  from './routes';
 
-// Schema
-import { createUser } from '../../schemas';
+import { validator } from '../../utils';
+import { schemaLogout } from '../../schemas';
 
 export const router = express.Router();
 
-router.get('/', [ limiter(5, 60 * 1000) ], get);
-router.post('/', [ validator(createUser) ], post);
+router.post('/login', login);
+router.post('/logout',  [ validator(schemaLogout) ],  logout);
 
-router.get('/:userHash', getByHash);
-
-export { router as users };
+export { router as auth };

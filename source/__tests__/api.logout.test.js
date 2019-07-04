@@ -1,10 +1,28 @@
-import axios from 'axios';
+import { axiosInstance } from '../axios.utils';
 
-const api_url = 'http://localhost:3000';
+describe('test /logout', () => {
+    test('get 204 / успех: отсутствует тело ответа', async () => {
+        const { status } = await axiosInstance()
+            .post('/logout', {
+                login: 'john_deer',
+            });
 
-describe('', () => {
-    test('should ', async () => {
-        const { status } = await axios.get(`${api_url}/Users/ggg`);
-        expect(status).toBe(200);
+        expect(status).toBe(204);
+    });
+
+    test('get 400 / не верный пейлоад', async () => {
+        const { status } = await axiosInstance().post('/logout');
+        expect(status).toBe(400);
+    });
+
+    test('get 401 / требуется логин', async () => {
+        const { status } = await axiosInstance().post('/logout');
+
+        expect(status).toBe(401);
+    });
+
+    test('get 500 / серверная ошибка', async () => {
+        const { status } = await axiosInstance().post('/logout');
+        expect(status).toBe(500);
     });
 });

@@ -9,7 +9,19 @@ export const createUser = {
             type:   'string',
             format: 'email',
         },
+        phone: {
+            type: 'string',
+        },
+        password: {
+            type: 'string',
+        },
+        sex: {
+            enum: [ 'm', 'f' ],
+        },
+        role: {
+            type: 'string',
+        },
     },
-    required:             [ 'name', 'email' ],
+    required:             [ 'name', 'email', 'phone', 'password', 'sex' ],
     additionalProperties: false,
 };

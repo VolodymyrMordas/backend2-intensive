@@ -1,19 +1,21 @@
+import usersRepository from './users.repository';
+
 export const get = (req, res) => {
     try {
-        const data = [];
+        const data = usersRepository.getUsers();
 
-        res.status(200).json({ data });
+        return res.status(200).json({ data });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        return res.status(400).json({ message: error.message });
     }
 };
 
 export const post = (req, res) => {
     try {
-        const data = {};
+        const hash = usersRepository.createUser(req.body);
 
-        res.status(201).json({ data });
+        return res.status(201).json({ hash });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
 };

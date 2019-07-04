@@ -1,10 +1,33 @@
-import axios from 'axios';
+import { axiosInstance } from '../axios.utils';
 
-const api_url = 'http://localhost:3000';
+describe('get /login', () => {
+    test('should fail / 400 / не верный пейлоад', async () => {
+        const { status, data: { message } }
+          = await axiosInstance().post('/login');
 
-describe('', () => {
-    test('should ', async () => {
-        const { status } = await axios.get(`${api_url}/Users/ggg`);
-        expect(status).toBe(200);
+        expect(status).toBe(400);
+        expect(message).toBe('incorrect payload');
+    });
+
+    test('should fail / 400 / не верный пейлоад', async () => {
+        const { status, data: { message } }
+          = await axiosInstance().post('/login', null, {
+              headers: {
+                  authorization: 'sd',
+              },
+          });
+
+        expect(status).toBe(400);
+        expect(message).toBe('incorrect payload');
+    });
+
+    test('should fail / 204 / успех: отсутствует тело ответа', async () => {
+        const { status } = await axiosInstance().post('/login', null, {
+            headers: {
+                authorization: 'dm9sb2R5bXlybW9yZGFzOnF3ZXJ0eQ==',
+            },
+        });
+
+        expect(status).toBe(204);
     });
 });
