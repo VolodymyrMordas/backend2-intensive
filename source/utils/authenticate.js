@@ -1,14 +1,16 @@
 // Instruments
 import { getPassword } from './env';
+import querystring from 'querystring';
 
 const password = getPassword();
 
 export const authenticate = (req, res, next) => {
-    const auth = req.header('authorization');
-
-    if (auth && auth === password) {
+    const { cookie } = req.headers;
+    const { email } = querystring.parse(cookie);
+    
+    if (email) {
         next();
     } else {
-        res.status(401).json({ message: 'authentication credentials are not valid' });
+        res.status(401).json({ message: 'authentication issue here. seems that u have forget to set cookies' });
     }
 };
