@@ -3,7 +3,7 @@ import express from 'express';
 // Instruments
 import { app } from './server';
 import { getPort } from './utils';
-import { logger} from './middleware/request.logger';
+import { logger, password} from './middleware';
 
 // Routers
 import {auth, classes, lessons, users} from './routers';
