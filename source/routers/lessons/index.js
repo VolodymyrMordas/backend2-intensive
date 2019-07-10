@@ -1,36 +1,31 @@
 // Core
 import express from 'express';
 
-import {
-    getLesson,
-    createLesson,
-    getLessons,
-    createVideo,
-    createKeynote,
-    getVideoByHash,
-    deleteVideoByHash,
-    getKeynoteByHash,
-    deleteKeynoteByHash, getLessonByHash, updateLessonByHash, deleteLessonByHash,
-} from './route';
+// Instruments
+import { get, post } from './route';
+import { getByHash, updateByHash, removeByHash } from './hash';
+import { addKeynote } from './hash/keynotes';
+import { getKeynoteByHash, removeKeynoteByHash } from './hash/keynotes/hash';
+import { getVideoByHash, removeVideoByHash } from './hash/videos/hash';
+import { addVideo } from './hash/videos';
+import { authenticate } from '../../utils';
 
 export const router = express.Router();
 
-// todo: define validation here
-router.get('/', getLessons);
-router.post('/',  createLesson);
+router.get('/', get);
+router.post('/', [ authenticate ], post);
 
-// todo: define validation here
-router.get('/:lessonHash', getLessonByHash);
-router.put('/:lessonHash', updateLessonByHash);
-router.delete('/:lessonHash', deleteLessonByHash);
+router.get('/:lessonHash', [ authenticate ], getByHash);
+router.put('/:lessonHash', [ authenticate ], updateByHash);
+router.delete('/:lessonHash', [ authenticate ], removeByHash);
 
-router.post('/:lessonHash/videos',  createVideo);
-router.post('/:lessonHash/keynotes',  createKeynote);
+router.post('/:lessonHash/videos', [ authenticate ], addVideo);
+router.post('/:lessonHash/keynotes', [ authenticate ], addKeynote);
 
-router.get('/:lessonHash/videos/:videoHash',  getVideoByHash);
-router.delete('/:lessonHash/videos/:videoHash',  deleteVideoByHash);
+router.get('/:lessonHash/videos/:videoHash', [ authenticate ], getVideoByHash);
+router.delete('/:lessonHash/videos/:videoHash', [ authenticate ], removeVideoByHash);
 
-router.get('/:lessonHash/keynotes/:keynoteHash',  getKeynoteByHash);
-router.delete('/:lessonHash/keynotes/:keynoteHash',  deleteKeynoteByHash);
+router.get('/:lessonHash/keynotes/:keynoteHash', [ authenticate ], getKeynoteByHash);
+router.delete('/:lessonHash/keynotes/:keynoteHash', [ authenticate ], removeKeynoteByHash);
 
 export { router as lessons };

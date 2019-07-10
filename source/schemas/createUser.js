@@ -16,12 +16,10 @@ export const createUser = {
             type: 'string',
         },
         sex: {
-            enum: [ 'm', 'f' ],
-        },
-        role: {
             type: 'string',
+            enum: [ 'f', 'm' ],
         },
     },
-    required:             [ 'name', 'email', 'phone', 'password', 'sex' ],
+    required:             [ 'name', 'email' ],
     additionalProperties: false,
 };

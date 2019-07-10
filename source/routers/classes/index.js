@@ -1,16 +1,22 @@
 // Core
 import express from 'express';
 
-import {getClass, updateClass, deleteClass, enroll, expel} from './route';
+// Instruments
+import { get, post } from './route';
+import { getByHash, updateByHash, removeByHash } from './hash';
+import { enroll, expel } from './education';
+import { authenticate } from '../../utils';
 
 export const router = express.Router();
 
-// todo: define validation here
-router.get('/:classHash', getClass);
-router.put('/:classHash',  updateClass);
-router.delete('/:classHash', deleteClass);
+router.get('/', get);
+router.post('/', [ authenticate ], post);
 
-router.put('/enroll',  enroll);
-router.put('/expel',  expel);
+router.get('/:classHash', [ authenticate ], getByHash);
+router.put('/:classHash', [ authenticate ], updateByHash);
+router.delete('/:classHash', [ authenticate ], removeByHash);
+
+router.post('/:classHash/enroll', [ authenticate ], enroll);
+router.post('/:classHash/expel', [ authenticate ], expel);
 
 export { router as classes };

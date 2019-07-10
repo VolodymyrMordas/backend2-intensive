@@ -1,19 +1,27 @@
-export const getClass = (req, res) => {
+import dg from 'debug';
 
+const debug = dg('router:classes');
+
+export const get = (req, res) => {
+    debug(`${req.method} - ${req.originalUrl}`);
+
+    try {
+        const data = [];
+
+        res.status(200).json({ data });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-export const updateClass = (req, res) => {
+export const post = (req, res) => {
+    debug(`${req.method} - ${req.originalUrl}`);
 
-};
+    try {
+        const data = {};
 
-export const deleteClass = (req, res) => {
-
-};
-
-export const enroll = (req, res) => {
-
-};
-
-export const expel = (req, res) => {
-
+        res.status(201).json({ data });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };

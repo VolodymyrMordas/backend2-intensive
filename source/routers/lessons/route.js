@@ -1,41 +1,27 @@
-export const getLessons = (req, res) => {
+import dg from 'debug';
 
+const debug = dg('router:lessons');
+
+export const get = (req, res) => {
+    debug(`${req.method} - ${req.originalUrl}`);
+
+    try {
+        const data = [];
+
+        res.status(200).json({ data });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-export const createLesson = (req, res) => {
+export const post = (req, res) => {
+    debug(`${req.method} - ${req.originalUrl}`);
 
-};
+    try {
+        const data = {};
 
-export const getLessonByHash = (req, res) => {
-
-};
-
-export const updateLessonByHash = (req, res) => {
-
-};
-
-export const deleteLessonByHash = (req, res) => {
-
-};
-export const createVideo = (req, res) => {
-
-};
-export const createKeynote = (req, res) => {
-
-};
-
-export const getVideoByHash = (req, res) => {
-
-};
-
-export const deleteVideoByHash = (req, res) => {
-
-};
-
-export const getKeynoteByHash = (req, res) => {
-
-};
-
-export const deleteKeynoteByHash = (req, res) => {
-
+        res.status(201).json({ data });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
