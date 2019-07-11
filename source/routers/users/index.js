@@ -1,5 +1,6 @@
 // Core
 import express from 'express';
+import passport from 'passport';
 
 // Instruments
 import { get, post } from './route';
@@ -11,7 +12,7 @@ import { createUser } from '../../schemas';
 
 export const router = express.Router();
 
-router.get('/', [ authenticate, limiter(5, 60 * 1000) ], get);
+router.get('/', passport.authenticate('github', { failureRedirect: '/api/login' }), get);
 router.post('/', [ validator(createUser) ], post);
 
 router.get('/:userHash', [ authenticate ], getByHash);
